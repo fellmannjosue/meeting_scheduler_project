@@ -9,27 +9,28 @@
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">Crear Cita</h2>
-    <form method="POST">
+    <form method="POST" action="{% url 'create_appointment' %}">
         {% csrf_token %}
 
         <!-- Nombre del Padre -->
         <div class="mb-3">
             <label for="id_parent_name" class="form-label">Nombre del Padre</label>
-            <input type="text" id="id_parent_name" name="parent_name" class="form-control" placeholder="Ingrese el nombre del padre" value="{{ request.POST.parent_name }}">
+            <input type="text" id="id_parent_name" name="parent_name" class="form-control" placeholder="Ingrese el nombre del padre">
         </div>
 
         <!-- Nombre del Alumno -->
         <div class="mb-3">
             <label for="id_student_name" class="form-label">Nombre del Alumno</label>
-            <input type="text" id="id_student_name" name="student_name" class="form-control" placeholder="Ingrese el nombre del alumno" value="{{ request.POST.student_name }}">
+            <input type="text" id="id_student_name" name="student_name" class="form-control" placeholder="Ingrese el nombre del alumno">
         </div>
 
         <!-- Grado -->
         <div class="mb-3">
             <label for="id_grade" class="form-label">Grado</label>
             <select id="id_grade" name="grade" class="form-select">
+                <option value="">Seleccione el grado</option>
                 {% for grade in grades %}
-                <option value="{{ grade.id }}" {% if request.POST.grade == grade.id %}selected{% endif %}>{{ grade.name }}</option>
+                <option value="{{ grade.id }}">{{ grade.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -38,8 +39,9 @@
         <div class="mb-3">
             <label for="id_relationship" class="form-label">Parentesco</label>
             <select id="id_relationship" name="relationship" class="form-select">
+                <option value="">Seleccione el parentesco</option>
                 {% for relationship in relationships %}
-                <option value="{{ relationship.id }}" {% if request.POST.relationship == relationship.id %}selected{% endif %}>{{ relationship.name }}</option>
+                <option value="{{ relationship.id }}">{{ relationship.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -48,8 +50,11 @@
         <div class="mb-3">
             <label for="id_teacher" class="form-label">Maestro</label>
             <select id="id_teacher" name="teacher" class="form-select">
+                <option value="">Seleccione un maestro</option>
                 {% for teacher in teachers %}
-                <option value="{{ teacher.id }}" data-area="{{ teacher.area }}" {% if request.POST.teacher == teacher.id %}selected{% endif %}>{{ teacher.name }}</option>
+                <option value="{{ teacher.id }}" data-area="{{ teacher.area }}" data-class-name="{{ teacher.class_name }}">
+                    {{ teacher.name }}
+                </option>
                 {% endfor %}
             </select>
         </div>
@@ -57,13 +62,13 @@
         <!-- Área -->
         <div class="mb-3">
             <label for="area-display" class="form-label">Área</label>
-            <input type="text" id="area-display" class="form-control" readonly placeholder="Área seleccionada" value="">
+            <input type="text" id="area-display" class="form-control" readonly placeholder="Área seleccionada">
         </div>
 
         <!-- Razón -->
         <div class="mb-3">
             <label for="id_reason" class="form-label">Razón o Motivo</label>
-            <textarea id="id_reason" name="reason" class="form-control" rows="3">{{ request.POST.reason }}</textarea>
+            <textarea id="id_reason" name="reason" class="form-control" rows="3"></textarea>
         </div>
 
         <!-- Botón de Envío -->
@@ -79,16 +84,11 @@
 
         teacherSelect.addEventListener('change', function () {
             const selectedOption = teacherSelect.options[teacherSelect.selectedIndex];
-            areaDisplay.value = selectedOption.dataset.area || '';
+            const area = selectedOption.dataset.area || '';
+            const className = selectedOption.dataset.className || '';
+            areaDisplay.value = area === 'Asociado' ? className : area;
         });
-
-        // Configuración inicial del área
-        if (teacherSelect.value) {
-            const initialOption = teacherSelect.options[teacherSelect.selectedIndex];
-            areaDisplay.value = initialOption.dataset.area || '';
-        }
     });
 </script>
 </body>
 </html>
-y

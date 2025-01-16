@@ -63,6 +63,8 @@ class Appointment(models.Model):
     reason = models.TextField()  # Razón o motivo de la cita
     date = models.DateField(null=True, blank=True)  # Fecha de la cita
     time = models.TimeField(null=True, blank=True)  # Hora de la cita
+    email = models.EmailField(null=True, blank=True)  # Campo para el correo electrónico
+    phone = models.CharField(max_length=15, null=True, blank=True)  # Campo para el número de teléfono
     status = models.CharField(
         max_length=50,
         choices=[
