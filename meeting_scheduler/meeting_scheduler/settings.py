@@ -48,11 +48,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Required for login
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -70,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -81,6 +81,14 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Redirigir al usuario después de iniciar sesión
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+# URL del login
+LOGIN_URL = '/login/'
+
 
 WSGI_APPLICATION = 'meeting_scheduler.wsgi.application'
 

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, Teacher, Grade, Relationship, Schedule
 from .forms import AppointmentForm
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from datetime import datetime, timedelta
 
+
 def create_appointment(request):
+    """Vista para crear una nueva cita."""
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
@@ -24,15 +27,41 @@ def create_appointment(request):
         'relationships': relationships,
     })
 
+
 def select_date(request, appointment_id):
+    """Vista para seleccionar la fecha y hora."""
     appointment = get_object_or_404(Appointment, id=appointment_id)
     teacher = appointment.teacher
+
+    if request.method == 'POST':
+        # Recoger datos del formulario
+        date = request.POST.get('selected_date')
+        time = request.POST.get('selected_time')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+
+        # Verificar que los datos existen
+        if date and time and email and phone:
+            # Asignar los valores al objeto Appointment
+            appointment.date = date
+            appointment.time = time
+            appointment.email = email
+            appointment.phone = phone
+            appointment.save()  # Guardar los datos en la base de datos
+            return redirect('dashboard')
+        else:
+            return render(request, 'appointments/select_date.html', {
+                'appointment': appointment,
+                'error': 'Todos los campos son obligatorios.',
+            })
 
     return render(request, 'appointments/select_date.html', {
         'appointment': appointment,
     })
 
+
 def get_available_slots(request):
+    """API para obtener horarios disponibles."""
     teacher_id = request.GET.get('teacher_id')
     date_str = request.GET.get('date')
 
@@ -43,6 +72,7 @@ def get_available_slots(request):
         selected_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         day_of_week = selected_date.strftime('%A')
 
+        # Filtrar horarios disponibles según el maestro y el día
         schedules = Schedule.objects.filter(teacher_id=teacher_id, day_of_week=day_of_week)
         reserved_slots = Appointment.objects.filter(teacher_id=teacher_id, date=selected_date).values_list('time', flat=True)
 
@@ -61,11 +91,11 @@ def get_available_slots(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-def dashboard(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
 
-    appointments = Appointment.objects.all()
+@login_required
+def dashboard(request):
+    """Vista del Dashboard para mostrar citas."""
+    appointments = Appointment.objects.all().order_by('date', 'time')  # Ordenar por fecha y hora
     return render(request, 'appointments/dashboard.html', {
         'appointments': appointments,
     })
