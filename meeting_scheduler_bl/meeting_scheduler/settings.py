@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'meeting_scheduler.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'meeting_scheduler_db'),
+        'NAME': os.getenv('DB_NAME', 'meeting_scheduler_db_bl'),
         'USER': os.getenv('DB_USER', 'admin3'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'Test-12345'),
         'HOST': os.getenv('DB_HOST', '192.168.10.6'),
