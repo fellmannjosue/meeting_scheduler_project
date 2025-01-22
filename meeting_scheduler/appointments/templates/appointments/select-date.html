@@ -102,10 +102,25 @@
                     if (data.slots && data.slots.length > 0) {
                         data.slots.forEach(slot => {
                             const li = document.createElement('li');
-                            li.textContent = slot;
+                            li.textContent = slot.time;
                             li.classList.add('list-group-item');
-                            li.style.cursor = 'pointer';
-                            li.onclick = () => selectTime(slot);
+
+                            if (slot.available) {
+                                li.style.cursor = 'pointer';
+                                li.classList.add('available');
+                                li.onclick = () => selectTime(date, slot.time);
+                            } else {
+                                li.style.cursor = 'not-allowed';
+                                li.classList.add('unavailable');
+                                li.onclick = () => {
+                                    Swal.fire({
+                                        title: 'Horario no disponible',
+                                        text: 'Este horario ya está reservado. Por favor, seleccione otro.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Aceptar',
+                                    });
+                                };
+                            }
                             timeSlots.appendChild(li);
                         });
                     } else {
@@ -117,10 +132,11 @@
                 });
         }
 
-        function selectTime(time) {
+        function selectTime(date, time) {
             document.getElementById('selected-time').value = time;
             Swal.fire({
-                title: `Hora seleccionada: ${time}`,
+                title: 'Selección realizada',
+                html: `<p><strong>Fecha:</strong> ${date}</p><p><strong>Hora:</strong> ${time}</p>`,
                 icon: 'info',
                 confirmButtonText: 'Aceptar',
             });
@@ -152,7 +168,8 @@
                 if (response.ok) {
                     Swal.fire({
                         title: '¡Cita agendada!',
-                        text: 'Su cita ha sido registrada exitosamente.',
+                        html: `<p><strong>Fecha:</strong> ${date}</p><p><strong>Hora:</strong> ${time}
+                            <br> Esperar la confirmacion del encargado <br> GRACIAS POR ESPERAR </p>`,
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                     }).then(() => {

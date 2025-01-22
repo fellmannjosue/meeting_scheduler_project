@@ -20,6 +20,7 @@
                     <th>Grado</th>
                     <th>Parentesco</th>
                     <th>Maestro</th>
+                    <th>Materia</th>
                     <th>Teléfono</th>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -34,6 +35,7 @@
                     <td>{{ appointment.grade.name }}</td>
                     <td>{{ appointment.relationship.name }}</td>
                     <td>{{ appointment.teacher.name }}</td>
+                    <td>{{ appointment.subject }}</td>
                     <td>{{ appointment.phone }}</td>
                     <td>{{ appointment.date|date:"d/m/Y" }}</td>
                     <td>{{ appointment.time|time:"H:i" }}</td>

@@ -109,7 +109,6 @@ def select_date(request, appointment_id):
         'appointment': appointment,
     })
 
-
 def get_available_slots(request):
     """API para obtener horarios disponibles."""
     teacher_id = request.GET.get('teacher_id')
@@ -122,7 +121,9 @@ def get_available_slots(request):
         selected_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         day_of_week = selected_date.strftime('%A')
 
+        # Obtener los horarios del maestro en el día de la semana especificado
         schedules = Schedule.objects.filter(teacher_id=teacher_id, day_of_week=day_of_week)
+        # Obtener horarios ya reservados
         reserved_slots = Appointment.objects.filter(teacher_id=teacher_id, date=selected_date).values_list('time', flat=True)
 
         available_slots = []
@@ -132,8 +133,11 @@ def get_available_slots(request):
 
             while start_time < end_time:
                 next_time = (datetime.combine(datetime.today(), start_time) + timedelta(minutes=30)).time()
+                slot_range = f"{start_time.strftime('%H:%M')}-{next_time.strftime('%H:%M')}"
                 if start_time not in reserved_slots:
-                    available_slots.append(start_time.strftime('%H:%M'))
+                    available_slots.append({'time': slot_range, 'available': True})
+                else:
+                    available_slots.append({'time': slot_range, 'available': False})
                 start_time = next_time
 
         return JsonResponse({'slots': available_slots})

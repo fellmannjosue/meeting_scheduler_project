@@ -14,8 +14,9 @@
             <h3>Datos del Usuario</h3>
         </div>
         <div class="card-body">
-            <form id="user-data-form">
+            <form id="user-data-form" method="POST" action="/appointments/user-data/">
                 {% csrf_token %}
+                
                 <!-- Nombre del Padre -->
                 <div class="mb-3">
                     <label for="parent_name" class="form-label">Nombre del Padre</label>
@@ -40,33 +41,23 @@
                 </div>
 
                 <!-- Botón Siguiente -->
-                <button type="button" class="btn btn-primary w-100" id="next-button">Siguiente</button>
+                <button type="submit" class="btn btn-primary w-100" id="next-button">Siguiente</button>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    document.getElementById('next-button').addEventListener('click', function () {
+    document.getElementById('user-data-form').addEventListener('submit', function (e) {
         const parentName = document.getElementById('parent_name').value.trim();
         const studentName = document.getElementById('student_name').value.trim();
         const relationship = document.getElementById('relationship').value;
 
-        if (parentName && studentName && relationship) {
-            // Simulación de envío y redirección a la siguiente ventana
-            Swal.fire({
-                title: 'Datos guardados',
-                text: 'Redirigiendo a la siguiente ventana...',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = '/appointments/motivo/';
-            });
-        } else {
+        if (!parentName || !studentName || !relationship) {
+            e.preventDefault(); // Detener el envío del formulario si falta un campo
             Swal.fire({
                 title: 'Error',
-                text: 'Por favor, completa todos los campos.',
+                text: 'Por favor, complete todos los campos antes de continuar.',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
