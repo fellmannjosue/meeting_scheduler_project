@@ -36,7 +36,8 @@
             </ul>
         </div>
     </div>
-    <form id="appointment-form" method="POST">
+    <form id="appointment-form" method="POST" action="{% url 'select_date' appointment.id %}">
+        {% csrf_token %}
         <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico</label>
             <input type="email" id="email" name="email" class="form-control" placeholder="Ingrese su correo" required>
@@ -47,13 +48,13 @@
         </div>
         <input type="hidden" id="selected-date" name="selected_date">
         <input type="hidden" id="selected-time" name="selected_time">
-        <button type="submit" class="btn btn-primary">Agendar Cita</button>
+        <button type="submit" class="btn btn-primary w-100">Agendar Cita</button>
     </form>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const teacherId = "{{ appointment.teacher.id }}"; // Renderizamos teacher.id directamente
+        const teacherId = "{{ appointment.teacher.id }}";
         const calendar = document.querySelector('#calendar tbody');
         const timeSlots = document.querySelector('#time-slots');
         const form = document.querySelector('#appointment-form');
@@ -155,7 +156,7 @@
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                     }).then(() => {
-                        window.location.href = '/appointments/create/';
+                        window.location.href = '/appointments/user-data/';
                     });
                 } else {
                     throw new Error();

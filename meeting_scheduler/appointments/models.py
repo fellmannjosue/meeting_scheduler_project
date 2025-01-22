@@ -2,37 +2,51 @@ from django.db import models
 
 
 class Relationship(models.Model):
-    name = models.CharField(max_length=50)  # Tipo de parentesco (padre, madre, tutor, etc.)
+    """Tipo de parentesco (padre, madre, tutor, etc.)."""
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
 
 class Grade(models.Model):
-    name = models.CharField(max_length=50)  # Nombre del grado (Primero, Segundo, etc.)
+    """Nombre del grado (Primero, Segundo, etc.)."""
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
 
 class Teacher(models.Model):
-    name = models.CharField(max_length=255)  # Nombre del maestro
+    """Información del maestro."""
+    name = models.CharField(max_length=255)
     area = models.CharField(
         max_length=50,
         choices=[
-            ('Preescolar', 'Preescolar'),
-            ('Primaria', 'Primaria'),
-            ('Secundaria', 'Secundaria'),
-            ('Asociado', 'Asociado'),
+           ('Ingles de kinder a tecero 2', 'Ingles de kinder a tecero 2'),
+            ('Ingles de cuarto a noveno', 'Ingles de cuarto a noveno'),
+            ('Español', 'Español'),
+            ('Matematicas', 'Matematicas ')
         ]
     )
-    class_name = models.CharField(max_length=255, null=True, blank=True)  # Clase impartida (solo para Asociado)
+    class_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 
+class Subject(models.Model):
+    """Materias impartidas, vinculadas con un grado y un maestro."""
+    name = models.CharField(max_length=255)
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE, related_name='subjects')  # Relación con el grado
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='subjects')  # Relación con el maestro
+
+    def __str__(self):
+        return f"{self.name} ({self.grade.name})"
+
+
 class Schedule(models.Model):
+    """Horario del maestro."""
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name="schedules")
     day_of_week = models.CharField(
         max_length=10,
@@ -54,17 +68,19 @@ class Schedule(models.Model):
 
 
 class Appointment(models.Model):
+    """Citas agendadas por los padres."""
     parent_name = models.CharField(max_length=255)  # Nombre del padre
     student_name = models.CharField(max_length=255)  # Nombre del alumno
-    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)  # Grado del alumno
     relationship = models.ForeignKey(Relationship, on_delete=models.CASCADE)  # Parentesco
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)  # Maestro seleccionado
-    area = models.CharField(max_length=50)  # Área
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)  # Grado del alumno
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)  # Permitir nulo Materia seleccionada
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)  # Maestro relacionado (rellenado automáticamente)
+    area = models.CharField(max_length=50)  # Área del maestro (rellenado automáticamente)
     reason = models.TextField()  # Razón o motivo de la cita
     date = models.DateField(null=True, blank=True)  # Fecha de la cita
     time = models.TimeField(null=True, blank=True)  # Hora de la cita
-    email = models.EmailField(null=True, blank=True)  # Campo para el correo electrónico
-    phone = models.CharField(max_length=15, null=True, blank=True)  # Campo para el número de teléfono
+    email = models.EmailField(null=True, blank=True)  # Correo electrónico
+    phone = models.CharField(max_length=15, null=True, blank=True)  # Teléfono de contacto
     status = models.CharField(
         max_length=50,
         choices=[
