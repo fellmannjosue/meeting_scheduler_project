@@ -3,58 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Principal</title>
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon"> <!-- Favicon -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Menú Principal</title>
     <style>
         body {
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #f8f9fa; /* Fondo claro */
         }
-        .menu-container {
-            max-width: 600px;
+        .container {
+            margin-top: 50px;
         }
-        .btn {
-            margin-bottom: 20px;
-            font-size: 18px;
-            padding: 15px;
+        .btn-orange {
+            background-color: #fd7e14;
+            color: white;
+        }
+        .btn-orange:hover {
+            background-color: #e36414;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="menu-container text-center">
-        <h1 class="mb-4">Menú Principal</h1>
-        <button class="btn btn-primary w-100" id="bilingual">Agende su cita en Bilingüe</button>
-        <button class="btn btn-success w-100" id="school">Agende su cita en Colegio</button>
+    <div class="container text-center">
+        <h1 class="mb-4">Sistema de Agendamiento de Citas</h1>
+        <div class="d-grid gap-3">
+            <!-- Botón para Colegio -->
+            <button class="btn btn-primary btn-lg" id="colegio-btn">Agende su cita en Colegio</button>
+            <!-- Botón para Bilingüe -->
+            <button class="btn btn-orange btn-lg" id="bilingue-btn">Agende su cita en Bilingüe</button>
+        </div>
     </div>
 
     <script>
-        document.getElementById('bilingual').addEventListener('click', function () {
+        document.getElementById('colegio-btn').addEventListener('click', function () {
             Swal.fire({
-                title: 'Redirigiendo...',
-                text: 'Cargando el sistema de citas de Bilingüe.',
-                icon: 'info',
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = 'http://127.0.0.1:8001/appointments/user-data/'; // URL del proyecto bilingüe
+                title: 'Confirmación',
+                text: '¿Desea agendar su cita en el Colegio?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, continuar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'http://127.0.0.1:8001/appointments/user-data/';
+                }
             });
         });
 
-        document.getElementById('school').addEventListener('click', function () {
+        document.getElementById('bilingue-btn').addEventListener('click', function () {
             Swal.fire({
-                title: 'Redirigiendo...',
-                text: 'Cargando el sistema de citas del Colegio.',
-                icon: 'info',
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = 'http://127.0.0.1:8002/appointments/user-data/'; // URL del proyecto colegio
+                title: 'Confirmación',
+                text: '¿Desea agendar su cita en el Bilingüe?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, continuar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'http://127.0.0.1:8002/appointments/user-data/';
+                }
             });
         });
     </script>
