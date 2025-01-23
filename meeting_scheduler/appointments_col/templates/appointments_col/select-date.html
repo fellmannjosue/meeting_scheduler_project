@@ -95,7 +95,7 @@
         function loadTimeSlots(date) {
             document.getElementById('selected-date').value = date;
 
-            fetch(`/appointments/get-available-slots/?teacher_id=${teacherId}&date=${date}`)
+            fetch(`/appointments_col/get-available-slots/?teacher_id=${teacherId}&date=${date}`)
                 .then(response => response.json())
                 .then(data => {
                     timeSlots.innerHTML = '';
@@ -173,7 +173,7 @@
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                     }).then(() => {
-                        window.location.href = '/appointments/user-data/';
+                        window.location.href = '/appointments_col/user-data/';
                     });
                 } else {
                     throw new Error();

@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 from . import views
 
 urlpatterns = [
@@ -21,5 +22,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
 
     # API: Obtener horarios disponibles
+
     path('get-available-slots/', views.get_available_slots, name='get_available_slots'),
+
+    path('admin/', admin.site.urls),
 ]

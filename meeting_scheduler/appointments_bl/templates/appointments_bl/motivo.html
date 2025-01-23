@@ -75,7 +75,7 @@
         const gradeId = this.value;
 
         if (gradeId) {
-            fetch(`/appointments/get-subjects-by-grade/?grade_id=${gradeId}`)
+            fetch(`/appointments_bl/get-subjects-by-grade/?grade_id=${gradeId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.subjects) {
@@ -112,7 +112,7 @@
         const subjectId = this.value;
 
         if (subjectId) {
-            fetch(`/appointments/get-teacher-by-subject/?subject_id=${subjectId}`)
+            fetch(`/appointments_bl/get-teacher-by-subject/?subject_id=${subjectId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.teacher) {
@@ -144,7 +144,7 @@
         const reasonValue = reasonInput.value;
 
         if (gradeValue && subjectValue && reasonValue) {
-            fetch('/appointments/motivo/', {
+            fetch('/appointments_bl/motivo/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}',
@@ -166,7 +166,7 @@
                             timer: 2000,
                             showConfirmButton: false,
                         }).then(() => {
-                            window.location.href = `/appointments/select-date/${data.appointment_id}/`;
+                            window.location.href = `/appointments_bl/select-date/${data.appointment_id}/`;
                         });
                     } else {
                         Swal.fire({

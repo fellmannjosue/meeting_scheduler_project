@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from appointments.models import Appointment
+from appointments_bl.models import Appointment
 
 def user_login(request):
     """Vista para iniciar sesión."""
@@ -17,12 +17,12 @@ def user_login(request):
             return redirect('dashboard')
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
-    return render(request, 'users/login.html')
+    return render(request, 'users_bl/login.html')
 
 @login_required
 def dashboard(request):
     """Vista para mostrar el dashboard con las citas."""
     appointments = Appointment.objects.all()
-    return render(request, 'appointments/dashboard.html', {
+    return render(request, 'appointments_bl/dashboard.html', {
         'appointments': appointments,
     })

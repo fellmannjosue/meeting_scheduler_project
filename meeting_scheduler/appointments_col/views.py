@@ -20,12 +20,12 @@ def user_data(request):
             request.session['relationship_id'] = relationship_id
             return redirect('motivo')
         else:
-            return render(request, 'appointments/user_data.html', {
+            return render(request, 'appointments_col/user_data.html', {
                 'error': 'Por favor, complete todos los campos.',
                 'relationships': Relationship.objects.all(),
             })
 
-    return render(request, 'appointments/user_data.html', {
+    return render(request, 'appointments_col/user_data.html', {
         'relationships': Relationship.objects.all(),
     })
 
@@ -74,7 +74,7 @@ def motivo(request):
         return JsonResponse({'error': 'Por favor, complete todos los campos del formulario.'}, status=400)
 
     # Para solicitudes GET, renderizar el HTML
-    return render(request, 'appointments/motivo.html', {
+    return render(request, 'appointments_col/motivo.html', {
         'grades': Grade.objects.all(),
     })
 
@@ -105,7 +105,7 @@ def select_date(request, appointment_id):
                 'appointment': appointment,
             })
 
-    return render(request, 'appointments/select-date.html', {
+    return render(request, 'appointments_col/select-date.html', {
         'appointment': appointment,
     })
 
@@ -150,7 +150,7 @@ def get_available_slots(request):
 def dashboard(request):
     """Vista del Dashboard para mostrar citas."""
     appointments = Appointment.objects.all().order_by('date', 'time')
-    return render(request, 'appointments/dashboard.html', {
+    return render(request, 'appointments_col/dashboard.html', {
         'appointments': appointments,
     })
 

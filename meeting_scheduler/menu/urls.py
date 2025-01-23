@@ -1,8 +1,6 @@
-from django.contrib import admin
 from django.urls import path
-from django.shortcuts import render
+from . import views  # Importa las vistas de tu app
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', lambda request: render(request, 'index.html'), name='menu'),
+    path('', views.index, name='menu'),  # Ruta para la página del menú
 ]

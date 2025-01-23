@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'meeting_scheduler.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'billingue': {  # Cambiamos el nombre de default a billingue
+    'default': {  # Necesaria para operaciones internas de Django
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB_NAME_BILINGUE', 'meeting_scheduler_db_bl'),
         'USER': os.getenv('DB_USER_BILINGUE', 'admin3'),
@@ -98,7 +98,15 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST_BILINGUE', '192.168.10.6'),
         'PORT': os.getenv('DB_PORT_BILINGUE', '3306'),
     },
-    'colegio': {
+    'billingue': {  # Alias para la base de datos bilingüe
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME_BILINGUE', 'meeting_scheduler_db_bl'),
+        'USER': os.getenv('DB_USER_BILINGUE', 'admin3'),
+        'PASSWORD': os.getenv('DB_PASSWORD_BILINGUE', 'Test-12345'),
+        'HOST': os.getenv('DB_HOST_BILINGUE', '192.168.10.6'),
+        'PORT': os.getenv('DB_PORT_BILINGUE', '3306'),
+    },
+    'colegio': {  # Alias para la base de datos del colegio
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB_NAME_COLEGIO', 'meeting_scheduler_db_col'),
         'USER': os.getenv('DB_USER_COLEGIO', 'admin3'),
@@ -107,6 +115,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT_COLEGIO', '3306'),
     },
 }
+
 
 
 
