@@ -43,8 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'appointments',
-    'users',  # Si usas la app de usuarios
+    'appointments_bl',  # App de citas billingue
+    'appointments_col',  # App de citas en colegio
+    'users_bl',  # Si usas la app de usuarios
+    'users_col',  # Si usas la app de usuarios
+    'menu',  # App de menú
 ]
 
 MIDDLEWARE = [
@@ -98,15 +101,24 @@ WSGI_APPLICATION = 'meeting_scheduler.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'billingue': {  # Cambiamos el nombre de default a billingue
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'meeting_scheduler_db_bl'),
-        'USER': os.getenv('DB_USER', 'admin3'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Test-12345'),
-        'HOST': os.getenv('DB_HOST', '192.168.10.6'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-    }
+        'NAME': os.getenv('DB_NAME_BILINGUE', 'meeting_scheduler_db_bl'),
+        'USER': os.getenv('DB_USER_BILINGUE', 'admin3'),
+        'PASSWORD': os.getenv('DB_PASSWORD_BILINGUE', 'Test-12345'),
+        'HOST': os.getenv('DB_HOST_BILINGUE', '192.168.10.6'),
+        'PORT': os.getenv('DB_PORT_BILINGUE', '3306'),
+    },
+    'colegio': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME_COLEGIO', 'meeting_scheduler_db_col'),
+        'USER': os.getenv('DB_USER_COLEGIO', 'admin3'),
+        'PASSWORD': os.getenv('DB_PASSWORD_COLEGIO', 'Test-12345'),
+        'HOST': os.getenv('DB_HOST_COLEGIO', '192.168.10.6'),
+        'PORT': os.getenv('DB_PORT_COLEGIO', '3306'),
+    },
 }
+
 
 
 # Password validation

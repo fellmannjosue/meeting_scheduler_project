@@ -3,6 +3,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('appointments/', include('appointments.urls')),
-    path('users/', include('users.urls')),  # Asegúrate de que 'users.urls' esté correctamente referenciado
+    path('appointments_col/', include('appointments_col.urls')),
+    path('users_col/', include('users_col.urls')),  
+    path('appointments_bl/', include('appointments_bl.urls')),
+    path('users_bl/', include('users_bl.urls')),
 ]
