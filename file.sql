@@ -134,8 +134,49 @@ INSERT INTO meeting_scheduler_db_bl.appointments_col_schedule (day_of_week, star
 ('jueves', '08:00', '08:45', 18),
 ('jueves', '14:20', '15:00', 18),
 ('viernes', '09:55', '10:40', 18),
-('viernes', '11:25', '12:05', 18);
+('viernes', '11:25', '12:05', 18),
 
 
+-- Insertar horas libres para el maestro con ID 13 (Inestroza)
+('lunes', '14:20', '15:00', 13),
+('martes', '14:20', '15:00', 13),
+('miércoles', '13:40', '14:20', 13),
+('miércoles', '14:20', '15:00', 13),
+('jueves', '12:55', '13:40', 13),
+('viernes', '14:20', '15:00', 13),
 
+-- Insertar horas libres para el maestro con ID 14 (Rodriguez)
+('lunes', '14:20', '15:00', 14),
+('martes', '8:45', '9:30', 14),
+('martes', '14:20', '15:00', 14),
+('miercoles', '12:55', '13:40', 14),
+('miércoles', '14:20', '15:00', 14),
+('jueves', '11:25', '14:20', 14),
+('jueves', '14:20', '15:00', 14),
+('viernes', '13:40', '14:20', 14),
+('viernes', '14:20', '15:00', 14),
+-- Insertar horas libres para el maestro con ID 15 (Cantor)
+('lunes', '8:45', '9:30', 15),
+('lunes', '13:40', '14:20', 15),
+('lunes', '14:20', '15:00', 15),
+('miércoles', '8:00', '8:45', 15),
+('miércoles', '8:45', '9:30', 15),
+('miércoles', '13:40', '14:20', 15),
+('viernes', '8:00', '8:45', 15),
+('viernes', '9:55', '10:40', 15),
+('viernes', '10:40', '11:25', 15),
+('viernes', '13:40', '14:20', 15),
+-- Insertar horas libres para el maestro con ID 1 (Carrillo)
+('lunes', '8:45', '9:30', 1),
+('lunes', '12:55', '13:40', 1),
+('martes', '13:40', '14:20', 1),
+('martes', '14:20', '15:00', 1),
+('miercoles', '12:55','13:40'),
+('miercoles', '13:40','14:20'),
+('miercoles', '14:20', '15:00'),
+('jueves', '12:55','13:40'),
+('jueves', '13:40','14:20'),
+('jueves', '14:20', '15:00'),
+('viernes', '12:55', '13:40'),
+('viernes', '14:20', '15:00'),
 
