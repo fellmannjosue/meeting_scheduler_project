@@ -79,10 +79,19 @@ TEMPLATES = [
 ]
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+# Archivos estáticos
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# ⚠️ Elimina STATICFILES_DIRS si no tienes archivos estáticos en una carpeta separada
+# STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Directorio donde Django recopila los archivos estáticos al ejecutar collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Archivos multimedia
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Redirigir al usuario después de iniciar sesión
 LOGIN_REDIRECT_URL = '/dashboard/'
